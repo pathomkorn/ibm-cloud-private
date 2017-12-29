@@ -35,6 +35,7 @@ $ openssl rsa < icp.pem  > icp.key
 #    }
 ```
 * Enable NGINX reverse proxy configuration in ```/etc/nginx/conf.d/icp-rproxy.conf```
+* Refer SSL Ciphers from https://testssl.sh/openssl-rfc.mapping.html
 ```bash
 ssl_certificate /etc/nginx/ssl/icp.crt;
 ssl_certificate_key /etc/nginx/ssl/icp.key;
