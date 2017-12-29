@@ -10,6 +10,7 @@ $ mkdir /etc/nginx/ssl
 $ cd /etc/nginx/ssl
 $ openssl req -x509 -newkey rsa:4096 -keyout icp.pem -out icp.crt -days 7300
 $ openssl rsa < icp.pem  > icp.key
+$ openssl dhparam -out dhparam.pem 2048
 ```
 * Disable NGINX default server configuration by comment out ```server { }``` block in ```/etc/nginx/nginx.conf```
 ```bash
@@ -39,10 +40,16 @@ $ openssl rsa < icp.pem  > icp.key
 ```bash
 ssl_certificate /etc/nginx/ssl/icp.crt;
 ssl_certificate_key /etc/nginx/ssl/icp.key;
-ssl_session_timeout 5m;
-ssl_prefer_server_ciphers on;
+ssl_session_timeout 1d;
+ssl_session_cache shared:SSL:50m;
+ssl_session_tickets off;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_protocols TLSv1.2;
-ssl_ciphers ECDHE-RSA-AES128-SHA:AES128-SHA;
+ssl_ciphers 'ECDHE-RSA-AES128-SHA:AES128-SHA:!DSS';
+ssl_prefer_server_ciphers on;
+add_header Strict-Transport-Security max-age=15768000;
+ssl_stapling on;
+ssl_stapling_verify on;
 
 server {
     listen 8443 ssl;
