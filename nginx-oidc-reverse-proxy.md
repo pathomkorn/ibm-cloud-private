@@ -42,7 +42,7 @@ ssl_certificate_key /etc/nginx/ssl/icp.key;
 ssl_session_timeout 5m;
 ssl_prefer_server_ciphers on;
 ssl_protocols TLSv1.2;
-ssl_ciphers AES256+EECDH:AES256+EDH:!aNULL;
+ssl_ciphers ECDHE-RSA-AES128-SHA:AES128-SHA;
 
 server {
     listen 8443 ssl;
