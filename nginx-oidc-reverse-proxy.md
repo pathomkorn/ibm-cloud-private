@@ -1,15 +1,15 @@
 # Setup NGINX Reverse Proxy to Solve OpenID Connect (OIDC) Redirection Issue
 * Install NGINX
 ```bash
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum install nginx
+$ yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+$ yum install nginx
 ```
 * Generate x.509 certificate
 ```bash
-mkdir /etc/nginx/ssl
-cd /etc/nginx/ssl
-openssl req -x509 -newkey rsa:4096 -keyout icp.pem -out icp.crt -days 7300
-openssl rsa < icp.pem  > icp.key
+$ mkdir /etc/nginx/ssl
+$ cd /etc/nginx/ssl
+$ openssl req -x509 -newkey rsa:4096 -keyout icp.pem -out icp.crt -days 7300
+$ openssl rsa < icp.pem  > icp.key
 ```
 * Disable NGINX default server configuration by comment out ```server { }``` block in ```/etc/nginx/nginx.conf```
 ```bash
@@ -55,6 +55,6 @@ server {
 ```
 * Start NGINX
 ```bash
-systemctl enable nginx
-systemctl start nginx
+$ systemctl enable nginx
+$ systemctl start nginx
 ```
