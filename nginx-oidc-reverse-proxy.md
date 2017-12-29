@@ -11,9 +11,8 @@
 # openssl req -x509 -newkey rsa:4096 -keyout icp.pem -out icp.crt -days 7300
 # openssl rsa < icp.pem  > icp.key
 ```
-* Disable NGINX default server configuration by comment out all ```server { }``` syntax
+* Disable NGINX default server configuration by comment out ```server { }``` block in ```/etc/nginx/nginx.conf```
 ```bash
-# vi /etc/nginx/nginx.conf
 #    server {
 #        listen       80 default_server;
 #        listen       [::]:80 default_server;
