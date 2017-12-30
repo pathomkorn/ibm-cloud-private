@@ -54,9 +54,10 @@ ssl_stapling_verify on;
 server {
     listen 8443 ssl;
     ssl on;
+    error_page 497  https://$host:$server_port$request_uri;   # Redirect to HTTPS is requesting protocol is HTTP
     location / {
         proxy_pass ${ORIGINAL_ICP_MASTER_NODE}:8443/;
-        sub_filter '${ORIGINAL_ICP_MASTER_NODE}:8443' '${NATED_ICP_MASTER_NODE}:8443';
+        sub_filter '${ORIGINAL_ICP_MASTER_NODE}:8443' '${NATED_ICP_MASTER_NODE}:8443';   # Replace logout OIDC URL to NATed IP address
         sub_filter_types *;
     }
 }
