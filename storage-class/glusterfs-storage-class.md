@@ -36,16 +36,54 @@ Id:${ICP_HEKETI_VOLUME_ID}    Cluster:${ICP_HEKETI_CLUSTER_ID}    Name:vol_${ICP
 $ docker ps | grep gluster | grep -v pause | awk '{ print $1 }'
 $ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume list
 vol_${ICP_HEKETI_VOLUME_ID}
-$ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} vol_${ICP_HEKETI_VOLUME_ID}
+$ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume status vol_${ICP_HEKETI_VOLUME_ID}
 Status of volume: vol_${ICP_HEKETI_VOLUME_ID}
 Gluster process                             TCP Port  RDMA Port  Online  Pid
 ------------------------------------------------------------------------------
 Brick ${ICP_WORKER_NODE_1}:/var/lib/heketi/mounts/vg_XXX/brick_XXX/brick      XXXXX     0          Y       XXXX
 Brick ${ICP_WORKER_NODE_2}:/var/lib/heketi/mounts/vg_XXX/brick_XXX/brick      XXXXX     0          Y       XXXX
+Brick ${ICP_WORKER_NODE_3}:/var/lib/heketi/mounts/vg_XXX/brick_XXX/brick      XXXXX     0          Y       XXXX
 Self-heal Daemon on ${ICP_WORKER_NODE_1}          N/A       N/A        Y       XXXX
 Self-heal Daemon on ${ICP_WORKER_NODE_2}          N/A       N/A        Y       XXXX
+Self-heal Daemon on ${ICP_WORKER_NODE_3}          N/A       N/A        Y       XXXX
 
 Task Status of Volume vol_${ICP_HEKETI_VOLUME_ID}
 ------------------------------------------------------------------------------
 There are no active volume tasks
+```
+* Check GlusterFS volume replication status for volume with issue
+```bash
+$ docker ps | grep gluster | grep -v pause | awk '{ print $1 }'
+$ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume list
+vol_${ICP_HEKETI_VOLUME_ID}
+$ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume heal vol_${ICP_HEKETI_VOLUME_ID} info
+Brick XXX
+Status: Connected
+Number of entries: 1
+
+Brick XXX
+Status: Transport endpoint is not connected
+Number of entries: -
+
+Brick XXX
+Status: Connected
+Number of entries: 1
+```
+* Check GlusterFS volume replication status for volume with issue
+```bash
+$ docker ps | grep gluster | grep -v pause | awk '{ print $1 }'
+$ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume list
+vol_${ICP_HEKETI_VOLUME_ID}
+$ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume heal vol_${ICP_HEKETI_VOLUME_ID} info
+Brick XXX
+Status: Connected
+Number of entries: 0
+
+Brick XXX
+Status: Connected
+Number of entries: 0
+
+Brick XXX
+Status: Connected
+Number of entries: 0
 ```
