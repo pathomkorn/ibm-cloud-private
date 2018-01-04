@@ -69,7 +69,7 @@ Brick XXX
 Status: Connected
 Number of entries: 1
 ```
-* Check GlusterFS volume replication status for volume with issue
+* Check GlusterFS volume replication status for volume without issue
 ```bash
 $ docker ps | grep gluster | grep -v pause | awk '{ print $1 }'
 $ docker exec -it ${ICP_GLUSTERFS_CONTAINER_ID} gluster volume list
