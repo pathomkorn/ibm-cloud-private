@@ -18,6 +18,12 @@ gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
     block_auto_created_users: false
     base: 'ou=${USER_OU},dc=example,dc=com'
     user_filter: '(objectClass=person)'
+    attributes:
+      username: ['mail', 'email', 'userPrincipalName']
+      email:    ['mail', 'email', 'userPrincipalName']
+      name:       'displayName'
+      first_name: 'givenName'
+      last_name:  'sn'
 EOS
 ```
 ```bash
